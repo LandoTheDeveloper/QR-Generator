@@ -58,35 +58,119 @@ public class DrawGrids extends Frame {
         grid.fillCell(row, column);
     }
 
-    public void drawCharacterInBinary(char ch, int startRow, int startColumn) {
+    public void drawCharacterInBinaryUp(char ch, int startRow, int startColumn) {
         String binary = String.format("%8s", Integer.toBinaryString((int) ch)).replace(' ', '0');
-        System.out.println("Printing '" + ch + "' as binary " + binary);  // DEBUG
-        
+        System.out.println("Printing '" + ch + "' UPWARDS as binary " + binary); // DEBUG
+
         int row = startRow;
         int column = startColumn;
-        
+
         for (int i = 0; i < 8; i++) {
-            // Right of 2x4
-            if (i % 2 == 0) {
-                column = startColumn - 1;
-            } else {
-                // Left of 2x4
-                column = startColumn; 
-            }
-    
-            if (binary.charAt(binary.length() - i - 1) == '1') {
-                System.out.println("Filling at (" + row + ", " + column + ")");
+
+            // Fill cell if binary is 1
+            if (binary.charAt(i) == '1') {
+                System.out.println("Filling at (" + row + ", " + column + "). i is " + i);
                 fillCell(row, column);
             }
 
+            // Switch to other column
+            if (i % 2 == 0) {
+                column = startColumn - 1;
+            } else {
+                column = startColumn;
+            }
+
             // Every 2 loops, go up a row
-            if ((i % 2 == 0) && i != 0) {
-                System.out.println("2 iterations done. Moving up a layer");
+            if ((i % 2 == 1) && i != 0) {
+                // System.out.println("2 iterations done. Moving up a layer");
                 row = row - 1;
             }
         }
     }
-    
+
+    public void drawCharacterInBinaryDown(char ch, int startRow, int startColumn) {
+        String binary = String.format("%8s", Integer.toBinaryString((int) ch)).replace(' ', '0');
+        System.out.println("Printing '" + ch + "' UPWARDS as binary " + binary); // DEBUG
+
+        int row = startRow;
+        int column = startColumn;
+
+        for (int i = 0; i < 8; i++) {
+
+            // Fill cell if binary is 1
+            if (binary.charAt(i) == '1') {
+                System.out.println("Filling at (" + row + ", " + column + "). i is " + i);
+                fillCell(row, column);
+            }
+
+            // Switch to other column
+            if (i % 2 == 0) {
+                column = startColumn + 1;
+            } else {
+                column = startColumn;
+            }
+
+            // Every 2 loops, go down a row
+            if ((i % 2 == 1) && i != 0) {
+                // System.out.println("2 iterations done. Moving up a layer");
+                row = row + 1;
+            }
+        }
+    }
+
+    public void drawCharacterInBinaryLeftTop(char ch, int startRow, int startColumn) {
+        String binary = String.format("%8s", Integer.toBinaryString((int) ch)).replace(' ', '0');
+        System.out.println("Printing '" + ch + "' UPWARDS as binary " + binary); // DEBUG
+
+        int row = startRow;
+        int column = startColumn;
+
+        for (int i = 0; i < 8; i++) {
+
+            // Fill cell if binary is 1
+            if (binary.charAt(i) == '1') {
+                System.out.println("Filling at (" + row + ", " + column + "). i is " + i);
+                fillCell(row, column);
+            }
+
+            if (i == 5) {
+                column++;
+                row++;
+            } else if (i == 1) {
+                column++;
+                row--;
+            } else {
+                column--;
+            }
+        }
+    }
+
+    public void drawCharacterInBinaryLeftBottom(char ch, int startRow, int startColumn) {
+        String binary = String.format("%8s", Integer.toBinaryString((int) ch)).replace(' ', '0');
+        System.out.println("Printing '" + ch + "' UPWARDS as binary " + binary); // DEBUG
+
+        int row = startRow;
+        int column = startColumn;
+
+        for (int i = 0; i < 8; i++) {
+
+            // Fill cell if binary is 1
+            if (binary.charAt(i) == '1') {
+                System.out.println("Filling at (" + row + ", " + column + "). i is " + i);
+                fillCell(row, column);
+            }
+
+            if (i == 5) {
+                column++;
+                row--;
+            } else if (i == 1) {
+                column++;
+                row++;
+            } else {
+                column--;
+            }
+        }
+    }
 
     public static void main(String[] args) {
         int width = 26;
@@ -96,7 +180,7 @@ public class DrawGrids extends Frame {
 
         // Build our Position Squares
 
-        // Top left 
+        // Top left
         // Rows
         for (int i = 1; i < 7; i++) {
             frame.fillCell(1, i);
@@ -110,11 +194,11 @@ public class DrawGrids extends Frame {
         // Center Piece
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                frame.fillCell(i+3,j+3);
+                frame.fillCell(i + 3, j + 3);
             }
         }
 
-        // Bottom left 
+        // Bottom left
         // Rows
         for (int i = 1; i < 7; i++) {
             frame.fillCell(height - 1, i);
@@ -128,11 +212,11 @@ public class DrawGrids extends Frame {
         // Center Piece
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                frame.fillCell(i+21,j+3);
+                frame.fillCell(i + 21, j + 3);
             }
         }
 
-        // Top Right 
+        // Top Right
         // Rows
         for (int i = height - 7; i < height - 1; i++) {
             frame.fillCell(1, i);
@@ -146,12 +230,10 @@ public class DrawGrids extends Frame {
         // Center Piece
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                frame.fillCell(i+3,j+21);
+                frame.fillCell(i + 3, j + 21);
             }
         }
 
-
-        
         // Draw Alignment Pattern
         // Rows
         for (int i = 17; i < 22; i++) {
@@ -167,7 +249,6 @@ public class DrawGrids extends Frame {
 
         frame.fillCell(19, 19);
 
-
         // Draw Timing Strips
         // Top to Bottom
         for (int i = 9; i <= 17; i = i + 2) {
@@ -182,13 +263,11 @@ public class DrawGrids extends Frame {
         // Special Dot
         frame.fillCell(18, 9);
 
-
-
         // Bottom right corner
         // 0100 For bianry encoding
-        frame.fillCell(height-1, width-2);
+        frame.fillCell(height - 1, width - 2);
 
-        //www.landoncraft.site -  len(20)'
+        // www.landoncraft.site - len(20)'
         // 20 = 00010100
 
         // w = 01110111
@@ -206,8 +285,10 @@ public class DrawGrids extends Frame {
         // i = 01101001
         // e = 01100101
 
-        // www.landoncraft.site = 01110111 01110111 01110111 00101110 01101100 01100001 01101110 01100100 01101111 01101110
-        //                        01100011 01110010 01100001 01100110 01110100 00101110 01110011 01101001 01110100 01100101
+        // www.landoncraft.site = 01110111 01110111 01110111 00101110 01101100 01100001
+        // 01101110 01100100 01101111 01101110
+        // 01100011 01110010 01100001 01100110 01110100 00101110 01110011 01101001
+        // 01110100 01100101
 
         // Length of address
         /*
@@ -220,14 +301,17 @@ public class DrawGrids extends Frame {
         frame.fillCell(height - 5, width - 2);
 
         // Draw www
-        /* w = 01110111
+        /*
+         * w = 01110111
          * 1 1
          * 1 0
          * 1 1
          * 1 0
          */
 
-        frame.drawCharacterInBinary('w', 14, 14);
-        
+        frame.drawCharacterInBinaryUp('1', 12, 2);
+        // frame.drawCharacterInBinaryDown('w', 10, 5);
+        // frame.drawCharacterInBinaryLeftTop('w', 2, 8);
+        // frame.drawCharacterInBinaryLeftBottom('w', 5, 8);
     }
 }
